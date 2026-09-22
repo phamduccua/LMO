@@ -1,0 +1,15 @@
+# CODE_CV -- Stochastic Frank-Wolfe VI optimizer on CIFAR-10 / CIFAR-100
+#
+# Cai torch TRUOC (chon dung ban CUDA cho may cua ban), roi moi:
+#     pip install -r requirements.txt
+#
+# RTX 3090 (Ampere, sm_86) can CUDA 11.8 tro len:
+#     pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+
+torch>=2.1
+torchvision>=0.16
+pytorchcv>=0.0.67     # WRN-28-10 cho CIFAR (torchvision KHONG co kien truc nay)
+numpy>=1.24
+tyro>=0.5             # parse dataclass Args cua train.py
+pandas>=2.0           # doc log.csv trong stage report
+matplotlib>=3.7       # hinh ve
