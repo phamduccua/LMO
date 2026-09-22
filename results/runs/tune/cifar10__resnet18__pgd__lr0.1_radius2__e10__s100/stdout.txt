@@ -1,0 +1,14 @@
+Files already downloaded and verified
+cifar10__resnet18__pgd__lr0.1_radius2__e10__s100
+  resnet18 (torchvision.models.resnet18, untrained) 11.17M params | cifar10 | 10 classes | opt=pgd | 41 blocks of C | cuda | amp=bfloat16
+[pgd] ep   1/10 | train loss 1.7281 acc 37.42% top5 87.28% | val loss 1.4798 acc 45.54% top5 91.78% ece 4.37 (best 45.54%) | gap -8.12 | |th|   111.8 | lr 0.09757 | 15s
+[pgd] ep   2/10 | train loss 1.2491 acc 54.23% top5 94.71% | val loss 1.0313 acc 63.30% top5 96.86% ece 2.17 (best 63.30%) | gap -9.07 | |th|   111.9 | lr 0.09048 | 27s
+[pgd] ep   3/10 | train loss 1.0115 acc 63.50% top5 96.92% | val loss 0.9580 acc 65.06% top5 97.52% ece 5.23 (best 65.06%) | gap -1.56 | |th|   112.0 | lr 0.07943 | 40s
+[pgd] ep   4/10 | train loss 0.8473 acc 69.87% top5 97.83% | val loss 0.8318 acc 70.78% top5 97.96% ece 2.46 (best 70.78%) | gap -0.91 | |th|   112.1 | lr 0.06549 | 49s
+[pgd] ep   5/10 | train loss 0.7278 acc 74.23% top5 98.43% | val loss 0.6703 acc 76.50% top5 98.76% ece 1.49 (best 76.50%) | gap -2.27 | |th|   112.1 | lr 0.05004 | 63s
+[pgd] ep   6/10 | train loss 0.6385 acc 77.38% top5 98.74% | val loss 0.6474 acc 77.62% top5 98.90% ece 3.98 (best 77.62%) | gap -0.24 | |th|   112.2 | lr 0.03459 | 84s
+[pgd] ep   7/10 | train loss 0.5679 acc 80.18% top5 99.05% | val loss 0.5382 acc 81.16% top5 99.10% ece 1.50 (best 81.16%) | gap -0.98 | |th|   112.2 | lr 0.02065 | 105s
+[pgd] ep   8/10 | train loss 0.5160 acc 81.84% top5 99.19% | val loss 0.5122 acc 82.62% top5 99.10% ece 1.79 (best 82.62%) | gap -0.78 | |th|   112.2 | lr 0.009575 | 126s
+[pgd] ep   9/10 | train loss 0.4878 acc 82.87% top5 99.32% | val loss 0.4866 acc 83.44% top5 99.10% ece 0.90 (best 83.44%) | gap -0.57 | |th|   112.2 | lr 0.002461 | 136s
+[pgd] ep  10/10 | train loss 0.4704 acc 83.54% top5 99.33% | val loss 0.4856 acc 83.38% top5 99.16% ece 1.46 (best 83.44%) | gap  0.16 | |th|   112.2 | lr 2.003e-08 | 154s
+final: val acc 83.38% (top5 99.16, err 16.62, ece 1.46, macroF1 83.53) | best 83.44% @ep9 | train acc 83.54% loss 0.4704 | gap 0.16 | 155s

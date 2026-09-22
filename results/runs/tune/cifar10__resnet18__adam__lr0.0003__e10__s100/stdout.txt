@@ -1,0 +1,14 @@
+Files already downloaded and verified
+cifar10__resnet18__adam__lr0.0003__e10__s100
+  resnet18 (torchvision.models.resnet18, untrained) 11.17M params | cifar10 | 10 classes | opt=adam | 41 blocks of C | cuda | amp=bfloat16
+[adam] ep   1/10 | train loss 1.3758 acc 49.76% top5 92.56% | val loss 1.2207 acc 57.50% top5 95.56% ece 4.64 (best 57.50%) | gap -7.74 | |th|   112.8 | lr 0.0002927 | 14s
+[adam] ep   2/10 | train loss 0.9596 acc 65.80% top5 97.07% | val loss 0.8641 acc 69.58% top5 98.10% ece 3.98 (best 69.58%) | gap -3.78 | |th|   113.6 | lr 0.0002714 | 25s
+[adam] ep   3/10 | train loss 0.7558 acc 73.17% top5 98.20% | val loss 0.7459 acc 73.92% top5 98.18% ece 3.11 (best 73.92%) | gap -0.75 | |th|   114.4 | lr 0.0002383 | 32s
+[adam] ep   4/10 | train loss 0.6358 acc 77.79% top5 98.79% | val loss 0.6815 acc 76.64% top5 98.62% ece 4.62 (best 76.64%) | gap  1.15 | |th|   115.0 | lr 0.0001965 | 43s
+[adam] ep   5/10 | train loss 0.5460 acc 81.02% top5 99.02% | val loss 0.5322 acc 81.42% top5 98.84% ece 1.41 (best 81.42%) | gap -0.40 | |th|   115.5 | lr 0.0001501 | 53s
+[adam] ep   6/10 | train loss 0.4759 acc 83.52% top5 99.29% | val loss 0.4671 acc 83.96% top5 99.24% ece 1.24 (best 83.96%) | gap -0.44 | |th|   115.7 | lr 0.0001038 | 65s
+[adam] ep   7/10 | train loss 0.4100 acc 85.76% top5 99.48% | val loss 0.4225 acc 85.40% top5 99.20% ece 1.52 (best 85.40%) | gap  0.36 | |th|   115.9 | lr 6.194e-05 | 76s
+[adam] ep   8/10 | train loss 0.3607 acc 87.50% top5 99.61% | val loss 0.3866 acc 87.00% top5 99.36% ece 1.29 (best 87.00%) | gap  0.50 | |th|   115.9 | lr 2.873e-05 | 87s
+[adam] ep   9/10 | train loss 0.3301 acc 88.63% top5 99.69% | val loss 0.3773 acc 86.90% top5 99.40% ece 1.44 (best 87.00%) | gap  1.73 | |th|   115.9 | lr 7.383e-06 | 98s
+[adam] ep  10/10 | train loss 0.3143 acc 89.22% top5 99.68% | val loss 0.3741 acc 86.92% top5 99.40% ece 1.61 (best 87.00%) | gap  2.30 | |th|   115.9 | lr 6.008e-11 | 110s
+final: val acc 86.92% (top5 99.40, err 13.08, ece 1.61, macroF1 87.10) | best 87.00% @ep8 | train acc 89.22% loss 0.3143 | gap 2.30 | 110s

@@ -1,0 +1,14 @@
+Files already downloaded and verified
+cifar10__resnet18__pgd__lr0.03_radius2__e10__s100
+  resnet18 (torchvision.models.resnet18, untrained) 11.17M params | cifar10 | 10 classes | opt=pgd | 41 blocks of C | cuda | amp=bfloat16
+[pgd] ep   1/10 | train loss 1.6920 acc 36.32% top5 87.37% | val loss 1.4656 acc 44.74% top5 93.04% ece 5.05 (best 44.74%) | gap -8.42 | |th|   111.8 | lr 0.02927 | 15s
+[pgd] ep   2/10 | train loss 1.3528 acc 50.56% top5 93.37% | val loss 1.2886 acc 53.80% top5 94.60% ece 5.63 (best 53.80%) | gap -3.24 | |th|   111.8 | lr 0.02714 | 27s
+[pgd] ep   3/10 | train loss 1.1597 acc 58.12% top5 95.54% | val loss 1.1532 acc 57.84% top5 96.10% ece 4.68 (best 57.84%) | gap  0.28 | |th|   111.8 | lr 0.02383 | 40s
+[pgd] ep   4/10 | train loss 1.0217 acc 63.31% top5 96.57% | val loss 0.9771 acc 64.84% top5 96.94% ece 1.99 (best 64.84%) | gap -1.53 | |th|   111.9 | lr 0.01965 | 52s
+[pgd] ep   5/10 | train loss 0.9274 acc 66.98% top5 97.18% | val loss 0.8716 acc 69.46% top5 97.84% ece 1.83 (best 69.46%) | gap -2.48 | |th|   111.9 | lr 0.01501 | 65s
+[pgd] ep   6/10 | train loss 0.8627 acc 69.31% top5 97.52% | val loss 0.7855 acc 71.70% top5 98.08% ece 1.64 (best 71.70%) | gap -2.39 | |th|   111.9 | lr 0.01038 | 74s
+[pgd] ep   7/10 | train loss 0.8027 acc 71.64% top5 97.89% | val loss 0.7459 acc 73.42% top5 98.28% ece 1.29 (best 73.42%) | gap -1.78 | |th|   111.9 | lr 0.006194 | 84s
+[pgd] ep   8/10 | train loss 0.7655 acc 73.00% top5 98.11% | val loss 0.7084 acc 74.82% top5 98.48% ece 1.94 (best 74.82%) | gap -1.82 | |th|   111.9 | lr 0.002873 | 97s
+[pgd] ep   9/10 | train loss 0.7413 acc 73.76% top5 98.32% | val loss 0.6965 acc 75.20% top5 98.48% ece 1.82 (best 75.20%) | gap -1.44 | |th|   111.9 | lr 0.0007383 | 109s
+[pgd] ep  10/10 | train loss 0.7300 acc 74.33% top5 98.35% | val loss 0.6952 acc 75.40% top5 98.62% ece 1.87 (best 75.40%) | gap -1.07 | |th|   111.9 | lr 6.008e-09 | 122s
+final: val acc 75.40% (top5 98.62, err 24.60, ece 1.87, macroF1 75.38) | best 75.40% @ep10 | train acc 74.33% loss 0.7300 | gap -1.07 | 122s

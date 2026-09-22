@@ -73,7 +73,7 @@ matplotlib.
 | Paper / note | Code |
 |---|---|
 | x ∈ C ⊂ ℝⁿ | θ = all weights; C = ∏_g C_g, C_g = {‖θ_g‖₂ ≤ R_g} — one `param_group` per block |
-| blocks of C | `--block all` (a single ball) / `module` (each conv/bn/linear layer) / `param` (each tensor) |
+| blocks of C | `--block all` (a single ball) / `module` (each conv/bn/linear layer, default) / `module_nobn` (`module` minus BatchNorm) / `param` (each tensor) |
 | radius R | `--radius-mode rel`: R_g = `radius`·‖θ_g⁰‖ — one scale usable for both 11M and 36M parameters |
 | F(θ) | cross-entropy gradient of **a single minibatch**; after `loss.backward()`, `p.grad` **is** F̂_k |
 | s_k ∈ β(F(x_k)) | `lmo(grads, params)` — L2: s = −R F̂/‖F̂‖ |
@@ -83,6 +83,39 @@ matplotlib.
 | one iteration k | one minibatch = one optimizer step (391 FW steps per epoch at batch 128) |
 
 BatchNorm running mean/var are **buffers**, not parameters, so the constraint never touches them.
+
+### 3.1 `--block module_nobn` — the constraint covers only conv/linear
+
+`module_nobn` is `module` with every BatchNorm layer removed from the product set: the blocks are
+built from the leaf modules, but any `nn.modules.batchnorm._NormBase` (BatchNorm1d/2d/3d,
+SyncBatchNorm) is skipped. On `resnet18`/CIFAR-10 that is 41 blocks → **21 blocks**, and the 9 600
+BatchNorm affine parameters (γ, β) fall outside C.
+
+**Those parameters are then left out of `param_groups` entirely, so the optimizer never updates
+them** — they stay frozen at their initial values (γ = 1, β = 0) for the whole run. BN is therefore
+a pure normalisation layer with no learnable affine part; the running mean/var buffers still update
+as usual, since they are buffers, not parameters. (This is a stronger statement than "unconstrained":
+unconstrained would mean free, here it means fixed.)
+
+Why it exists, and when to use it:
+
+* **Motivation.** A BatchNorm block holds only ~2·C parameters against ~C·C·9 in a conv layer, so
+  `R_g = radius·‖θ_g⁰‖` gives it a ball that is tiny in absolute terms but enormous relative to the
+  gradient signal — a per-layer L2 ball is a poor model of the constraint for BN. `module_nobn` takes
+  those degenerate blocks out instead of tuning around them.
+* **Use it** as an ablation: it isolates *"does constraining the BN scale/bias matter?"* from the
+  effect of constraining the conv/linear weights, and it is the setting that matches the deep-FW
+  papers that constrain weight matrices only.
+* **Cost.** Freezing γ, β typically costs a little accuracy relative to `module`; run it against
+  `--block module` on the same seeds before reading anything into the numbers.
+* **Reporting.** `n_blocks` in `summary.json` and the "`N` blocks of C" line printed at startup count
+  the *constrained* blocks only (21, not 41) — ‖θ‖ and `in_C` diagnostics likewise ignore the BN
+  parameters.
+
+```bash
+python train.py --optimizer fw --model resnet18 --dataset cifar10 --block module_nobn --radius 2
+python train.py --optimizer fw --model resnet18 --dataset cifar10 --block module      --radius 2  # control
+```
 
 ## 4. Metrics — logged every epoch, for **both** splits
 
@@ -112,3 +145,9 @@ radii.
    all three (FW) conditions. What matters is the **rate**: the partial sums only grow like log log k
    (measured: +1.32 per decade over 1e4→1e5, +1.05 over 1e5→1e6, against exactly +2.30 per decade for
    `harmonic`). See `optimizers/schedules.py` and test 2 in `sanity_check.py`.
+
+## 6. License
+
+Released under the **MIT License** — see [`LICENSE`](LICENSE). The third-party dependencies keep
+their own licenses: PyTorch / torchvision (BSD-3-Clause) and `pytorchcv` (MIT); the CIFAR-10/100
+datasets are distributed by their authors under their own terms and are not redistributed here.

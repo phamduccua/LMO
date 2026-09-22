@@ -1,0 +1,65 @@
+cell: cifar100 / resnet18 (off-the-shelf backbone, random init) | 18 FW, 0 baseline, 0 tuning, 0 FW-Adam runs
+epoch budget reported: 20
+metric = eval_acc_final (test top-1 accuracy [%]; higher is better); seeds 1..3, median [IQR]
+chance level = 1.00%
+
+============================================================================================================
+A. FRANK-WOLFE ABLATION -- schedule x R (R in units of ||theta_g^0||)
+============================================================================================================
+R      | harmonic: test acc       power: test acc          | harm |th|/R power |th|/R | harm gap  power gap
+1      | 16.49 [15.84, 18.18]     1.00 [1.00, 1.00]        | 0.250       0.245       | 0.959     1.003    
+5      | 44.56 [41.14, 45.27]     1.00 [1.00, 1.00]        | 0.098       0.239       | 0.993     1.005    
+
+theta_k in C at the end of every FW run: True (18/18)
+best FW cell by median: schedule=harmonic R=5 -> 44.56 [41.14, 45.27]
+
+============================================================================================================
+B. BASELINE LR TUNING (seed 100, 10 epochs, 10% val split -- the test set is not used here)
+============================================================================================================
+gda      lr=0.003  :       - lr=0.01   :       - lr=0.03   :       - lr=0.1    :       - lr=0.3    :       -   best lr=?
+pgd      lr=0.003  :       - lr=0.01   :       - lr=0.03   :       - lr=0.1    :       - lr=0.3    :       -   best lr=?
+ogda     lr=0.003  :       - lr=0.01   :       - lr=0.03   :       - lr=0.1    :       - lr=0.3    :       -   best lr=?
+eg       lr=0.003  :       - lr=0.01   :       - lr=0.03   :       - lr=0.1    :       - lr=0.3    :       -   best lr=?
+la_gda   lr=0.003  :       - lr=0.01   :       - lr=0.03   :       - lr=0.1    :       - lr=0.3    :       -   best lr=?
+sgdm     lr=0.01   :       - lr=0.03   :       - lr=0.1    :       - lr=0.3    :       -   best lr=?
+adam     lr=0.0001 :       - lr=0.0003 :       - lr=0.001  :       - lr=0.003  :       -   best lr=?
+oadam    lr=0.0001 :       - lr=0.0003 :       - lr=0.001  :       - lr=0.003  :       -   best lr=?
+eadam    lr=0.0001 :       - lr=0.0003 :       - lr=0.001  :       - lr=0.003  :       -   best lr=?
+la_adam  lr=0.0001 :       - lr=0.0003 :       - lr=0.001  :       - lr=0.003  :       -   best lr=?
+
+============================================================================================================
+C. HEAD-TO-HEAD at equal epochs -- median [IQR] over seeds
+============================================================================================================
+method                     test acc (final)       test acc (best)        top5     test loss train acc gap      grad evals time[s]
+fw-harmonic (R=5)          44.56 [41.14, 45.27]   44.56 [41.14, 45.27]   75.90    2.079    45.32    0.76     7800      915    
+fw-power (R=1)             1.00 [1.00, 1.00]      1.00 [1.00, 1.00]      5.00     4.606    0.96     -0.04    7800      918    
+fw-mlogm (R=5)             17.84 [17.68, 22.19]   17.84 [17.68, 22.19]   48.24    3.231    17.31    -0.24    7800      913    
+fw-const (gam=0.1,R=5)     1.00 [1.00, 1.00]      1.00 [1.00, 1.00]      5.00     4.657    0.95     -0.05    7800      922    
+
+============================================================================================================
+D. FULL METRIC SET -- train and test, same runs as C
+============================================================================================================
+method                     | tr loss  tr acc   tr top5  tr F1    | te loss  te acc   te top5  te ECE   te F1   
+fw-harmonic (R=5)          | 2.0473   45.32    77.90    44.09    | 2.0791   44.56    75.90    8.87     42.93   
+fw-power (R=1)             | 4.6064   0.96     4.75     0.41     | 4.6057   1.00     5.00     0.08     0.02    
+fw-mlogm (R=5)             | 3.2632   17.31    47.32    14.24    | 3.2314   17.84    48.24    5.29     14.55   
+fw-const (gam=0.1,R=5)     | 4.6633   0.95     4.96     0.89     | 4.6566   1.00     5.00     1.51     0.02    
+
+============================================================================================================
+E. CONVERGENCE SPEED -- first epoch reaching each target accuracy (median; '-' = never)
+============================================================================================================
+method                     ep to 50%  ep to 65%  ep to 72%   img/s      s/epoch   
+fw-harmonic (R=5)          -          -          -           1095       45.6      
+fw-power (R=1)             -          -          -           1087       45.9      
+fw-mlogm (R=5)             -          -          -           1102       45.3      
+fw-const (gam=0.1,R=5)     -          -          -           1090       45.8      
+
+============================================================================================================
+I. CONSTANT STEP gamma_k = gamma (OUTSIDE the theorem: gamma_k does not vanish)
+============================================================================================================
+'ref' is the harmonic cell of the SAME optimizer at the SAME R (eta1=1), i.e. the only thing changed is gamma_k -> 0.
+|th|/R ~ 1 means the iterate is pinned to the boundary of C: a step that never shrinks keeps overwriting theta with the vertex s_k.
+optimizer gamma    R     | constant               ref (harmonic)         | |th|/R   gap      acc drift
+fw        0.1      5     | 1.00 [1.00, 1.00]      44.56 [41.14, 45.27]   | 0.227    1.042    0.00    
+
+diverged: 0/3 constant-step runs (harmonic/power, same cells: 0/18)

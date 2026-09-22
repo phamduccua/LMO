@@ -1,0 +1,46 @@
+Files already downloaded and verified
+Files already downloaded and verified
+cifar10__resnet18__fw_adam__radius2_scheduleharmonic__e40__s3
+  resnet18 (torchvision.models.resnet18, untrained) 11.17M params | cifar10 | 10 classes | opt=fw_adam | 41 blocks of C | cuda | amp=bfloat16
+  C: l2 ball, R in [3.69, 64] (rel, radius=2), ||theta_0|| 111.73 -> 111.73 after projection
+[fw_adam] ep   1/40 | train loss 1.9191 acc 32.05% top5 83.99% | test loss 1.7424 acc 35.18% top5 86.26% ece 3.77 (best 35.18%) | gap -3.13 | |th|    51.7 | gamma 2.56e-03 gap_rel 0.999 | 57s
+[fw_adam] ep   2/40 | train loss 1.3102 acc 52.37% top5 94.00% | test loss 1.3012 acc 52.69% top5 94.43% ece 5.91 (best 52.69%) | gap -0.32 | |th|    39.4 | gamma 1.28e-03 gap_rel 0.998 | 113s
+[fw_adam] ep   3/40 | train loss 1.0249 acc 63.59% top5 96.69% | test loss 1.0310 acc 64.14% top5 96.46% ece 2.42 (best 64.14%) | gap -0.55 | |th|    35.3 | gamma 8.55e-04 gap_rel 0.997 | 169s
+[fw_adam] ep   4/40 | train loss 0.8547 acc 70.07% top5 97.79% | test loss 0.8854 acc 69.57% top5 97.33% ece 1.99 (best 69.57%) | gap  0.50 | |th|    33.2 | gamma 6.41e-04 gap_rel 0.997 | 226s
+[fw_adam] ep   5/40 | train loss 0.7456 acc 74.23% top5 98.36% | test loss 0.7595 acc 73.05% top5 98.49% ece 1.77 (best 73.05%) | gap  1.18 | |th|    31.9 | gamma 5.13e-04 gap_rel 0.997 | 283s
+[fw_adam] ep   6/40 | train loss 0.6640 acc 77.15% top5 98.65% | test loss 0.6498 acc 77.33% top5 98.92% ece 2.39 (best 77.33%) | gap -0.18 | |th|    31.2 | gamma 4.27e-04 gap_rel 0.997 | 340s
+[fw_adam] ep   7/40 | train loss 0.6170 acc 78.82% top5 98.79% | test loss 0.6083 acc 79.05% top5 98.84% ece 0.83 (best 79.05%) | gap -0.23 | |th|    30.5 | gamma 3.66e-04 gap_rel 0.997 | 397s
+[fw_adam] ep   8/40 | train loss 0.5674 acc 80.77% top5 98.97% | test loss 0.5500 acc 81.19% top5 99.23% ece 1.12 (best 81.19%) | gap -0.42 | |th|    30.1 | gamma 3.21e-04 gap_rel 0.997 | 454s
+[fw_adam] ep   9/40 | train loss 0.5296 acc 82.04% top5 99.15% | test loss 0.5385 acc 81.75% top5 99.04% ece 1.03 (best 81.75%) | gap  0.29 | |th|    29.7 | gamma 2.85e-04 gap_rel 0.997 | 511s
+[fw_adam] ep  10/40 | train loss 0.5020 acc 82.93% top5 99.20% | test loss 0.5114 acc 82.40% top5 99.16% ece 0.77 (best 82.40%) | gap  0.53 | |th|    29.4 | gamma 2.56e-04 gap_rel 0.997 | 568s
+[fw_adam] ep  11/40 | train loss 0.4730 acc 83.84% top5 99.28% | test loss 0.5915 acc 80.41% top5 98.60% ece 2.63 (best 82.40%) | gap  3.43 | |th|    29.3 | gamma 2.33e-04 gap_rel 0.997 | 625s
+[fw_adam] ep  12/40 | train loss 0.4547 acc 84.52% top5 99.32% | test loss 0.4719 acc 83.81% top5 99.37% ece 1.20 (best 83.81%) | gap  0.71 | |th|    29.1 | gamma 2.14e-04 gap_rel 0.997 | 683s
+[fw_adam] ep  13/40 | train loss 0.4288 acc 85.25% top5 99.43% | test loss 0.4651 acc 84.21% top5 99.37% ece 0.82 (best 84.21%) | gap  1.04 | |th|    29.1 | gamma 1.97e-04 gap_rel 0.997 | 740s
+[fw_adam] ep  14/40 | train loss 0.4115 acc 86.05% top5 99.49% | test loss 0.4576 acc 84.73% top5 99.19% ece 1.11 (best 84.73%) | gap  1.32 | |th|    29.0 | gamma 1.83e-04 gap_rel 0.997 | 797s
+[fw_adam] ep  15/40 | train loss 0.3940 acc 86.70% top5 99.49% | test loss 0.4412 acc 85.05% top5 99.40% ece 1.55 (best 85.05%) | gap  1.65 | |th|    29.0 | gamma 1.71e-04 gap_rel 0.997 | 855s
+[fw_adam] ep  16/40 | train loss 0.3794 acc 87.11% top5 99.57% | test loss 0.4214 acc 85.64% top5 99.43% ece 1.39 (best 85.64%) | gap  1.47 | |th|    29.0 | gamma 1.60e-04 gap_rel 0.997 | 913s
+[fw_adam] ep  17/40 | train loss 0.3692 acc 87.52% top5 99.55% | test loss 0.4776 acc 84.11% top5 99.23% ece 2.49 (best 85.64%) | gap  3.41 | |th|    29.0 | gamma 1.51e-04 gap_rel 0.997 | 970s
+[fw_adam] ep  18/40 | train loss 0.3478 acc 88.22% top5 99.60% | test loss 0.4163 acc 85.97% top5 99.50% ece 1.76 (best 85.97%) | gap  2.25 | |th|    29.0 | gamma 1.42e-04 gap_rel 0.997 | 1028s
+[fw_adam] ep  19/40 | train loss 0.3403 acc 88.50% top5 99.60% | test loss 0.3926 acc 86.69% top5 99.57% ece 1.50 (best 86.69%) | gap  1.81 | |th|    29.0 | gamma 1.35e-04 gap_rel 0.997 | 1086s
+[fw_adam] ep  20/40 | train loss 0.3285 acc 88.97% top5 99.66% | test loss 0.4001 acc 86.49% top5 99.42% ece 1.20 (best 86.69%) | gap  2.48 | |th|    29.0 | gamma 1.28e-04 gap_rel 0.997 | 1143s
+[fw_adam] ep  21/40 | train loss 0.3249 acc 88.99% top5 99.67% | test loss 0.4065 acc 86.38% top5 99.49% ece 1.85 (best 86.69%) | gap  2.61 | |th|    29.0 | gamma 1.22e-04 gap_rel 0.997 | 1200s
+[fw_adam] ep  22/40 | train loss 0.3088 acc 89.55% top5 99.73% | test loss 0.4169 acc 85.84% top5 99.49% ece 2.28 (best 86.69%) | gap  3.71 | |th|    29.1 | gamma 1.17e-04 gap_rel 0.997 | 1256s
+[fw_adam] ep  23/40 | train loss 0.3042 acc 89.57% top5 99.66% | test loss 0.4446 acc 84.89% top5 99.46% ece 2.57 (best 86.69%) | gap  4.68 | |th|    29.0 | gamma 1.11e-04 gap_rel 0.997 | 1312s
+[fw_adam] ep  24/40 | train loss 0.2928 acc 90.15% top5 99.71% | test loss 0.4352 acc 85.39% top5 99.45% ece 3.34 (best 86.69%) | gap  4.76 | |th|    29.1 | gamma 1.07e-04 gap_rel 0.997 | 1369s
+[fw_adam] ep  25/40 | train loss 0.2838 acc 90.49% top5 99.75% | test loss 0.3739 acc 87.60% top5 99.59% ece 1.92 (best 87.60%) | gap  2.89 | |th|    29.1 | gamma 1.03e-04 gap_rel 0.997 | 1425s
+[fw_adam] ep  26/40 | train loss 0.2762 acc 90.69% top5 99.75% | test loss 0.3929 acc 86.51% top5 99.41% ece 2.06 (best 87.60%) | gap  4.18 | |th|    29.1 | gamma 9.86e-05 gap_rel 0.997 | 1482s
+[fw_adam] ep  27/40 | train loss 0.2727 acc 90.82% top5 99.77% | test loss 0.3932 acc 86.78% top5 99.56% ece 2.76 (best 87.60%) | gap  4.04 | |th|    29.1 | gamma 9.50e-05 gap_rel 0.997 | 1538s
+[fw_adam] ep  28/40 | train loss 0.2649 acc 91.15% top5 99.79% | test loss 0.3661 acc 87.67% top5 99.58% ece 1.92 (best 87.67%) | gap  3.48 | |th|    29.1 | gamma 9.16e-05 gap_rel 0.997 | 1595s
+[fw_adam] ep  29/40 | train loss 0.2576 acc 91.32% top5 99.77% | test loss 0.3652 acc 87.99% top5 99.57% ece 1.78 (best 87.99%) | gap  3.33 | |th|    29.1 | gamma 8.84e-05 gap_rel 0.997 | 1651s
+[fw_adam] ep  30/40 | train loss 0.2515 acc 91.61% top5 99.79% | test loss 0.3764 acc 87.64% top5 99.49% ece 2.19 (best 87.99%) | gap  3.97 | |th|    29.1 | gamma 8.55e-05 gap_rel 0.997 | 1707s
+[fw_adam] ep  31/40 | train loss 0.2475 acc 91.64% top5 99.80% | test loss 0.3685 acc 87.44% top5 99.58% ece 2.85 (best 87.99%) | gap  4.20 | |th|    29.2 | gamma 8.27e-05 gap_rel 0.997 | 1764s
+[fw_adam] ep  32/40 | train loss 0.2383 acc 91.99% top5 99.83% | test loss 0.3666 acc 87.90% top5 99.65% ece 2.51 (best 87.99%) | gap  4.09 | |th|    29.2 | gamma 8.01e-05 gap_rel 0.997 | 1820s
+[fw_adam] ep  33/40 | train loss 0.2331 acc 92.21% top5 99.81% | test loss 0.3953 acc 86.96% top5 99.60% ece 3.29 (best 87.99%) | gap  5.25 | |th|    29.2 | gamma 7.77e-05 gap_rel 0.997 | 1877s
+[fw_adam] ep  34/40 | train loss 0.2298 acc 92.31% top5 99.82% | test loss 0.3490 acc 88.75% top5 99.66% ece 2.09 (best 88.75%) | gap  3.56 | |th|    29.2 | gamma 7.54e-05 gap_rel 0.997 | 1933s
+[fw_adam] ep  35/40 | train loss 0.2248 acc 92.54% top5 99.87% | test loss 0.3388 acc 89.17% top5 99.64% ece 1.95 (best 89.17%) | gap  3.37 | |th|    29.2 | gamma 7.33e-05 gap_rel 0.997 | 1989s
+[fw_adam] ep  36/40 | train loss 0.2153 acc 92.83% top5 99.85% | test loss 0.3424 acc 88.98% top5 99.59% ece 2.47 (best 89.17%) | gap  3.85 | |th|    29.3 | gamma 7.12e-05 gap_rel 0.996 | 2046s
+[fw_adam] ep  37/40 | train loss 0.2143 acc 92.83% top5 99.87% | test loss 0.3600 acc 88.18% top5 99.63% ece 2.51 (best 89.17%) | gap  4.65 | |th|    29.3 | gamma 6.93e-05 gap_rel 0.997 | 2102s
+[fw_adam] ep  38/40 | train loss 0.2110 acc 92.86% top5 99.85% | test loss 0.3579 acc 88.24% top5 99.63% ece 2.98 (best 89.17%) | gap  4.62 | |th|    29.3 | gamma 6.75e-05 gap_rel 0.997 | 2159s
+[fw_adam] ep  39/40 | train loss 0.2036 acc 93.15% top5 99.89% | test loss 0.3373 acc 88.89% top5 99.66% ece 2.52 (best 89.17%) | gap  4.26 | |th|    29.4 | gamma 6.57e-05 gap_rel 0.997 | 2215s
+[fw_adam] ep  40/40 | train loss 0.2043 acc 93.18% top5 99.88% | test loss 0.3528 acc 88.39% top5 99.64% ece 2.73 (best 89.17%) | gap  4.79 | |th|    29.3 | gamma 6.41e-05 gap_rel 0.997 | 2271s
+final: test acc 88.39% (top5 99.64, err 11.61, ece 2.73, macroF1 88.47) | best 89.17% @ep35 | train acc 93.18% loss 0.2043 | gap 4.79 | 2272s

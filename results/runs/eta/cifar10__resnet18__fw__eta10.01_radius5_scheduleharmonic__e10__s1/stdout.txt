@@ -1,0 +1,16 @@
+Files already downloaded and verified
+Files already downloaded and verified
+cifar10__resnet18__fw__eta10.01_radius5_scheduleharmonic__e10__s1
+  resnet18 (torchvision.models.resnet18, untrained) 11.17M params | cifar10 | 10 classes | opt=fw | 41 blocks of C | cuda | amp=bfloat16
+  C: l2 ball, R in [9.19, 160] (rel, radius=5), ||theta_0|| 111.67 -> 111.67 after projection
+[fw] ep   1/10 | train loss 1.5447 acc 43.82% top5 90.82% | test loss 1.3904 acc 49.46% top5 93.23% ece 5.00 (best 49.46%) | gap -5.64 | |th|   104.7 | gamma 2.56e-05 gap_rel 0.999 | 49s
+[fw] ep   2/10 | train loss 1.4321 acc 47.84% top5 92.55% | test loss 1.3550 acc 50.59% top5 93.75% ece 4.62 (best 50.59%) | gap -2.75 | |th|   104.0 | gamma 1.28e-05 gap_rel 0.999 | 97s
+[fw] ep   3/10 | train loss 1.4054 acc 48.96% top5 92.97% | test loss 1.3344 acc 51.60% top5 93.89% ece 5.14 (best 51.60%) | gap -2.64 | |th|   103.6 | gamma 8.55e-06 gap_rel 0.999 | 144s
+[fw] ep   4/10 | train loss 1.3893 acc 49.71% top5 93.01% | test loss 1.3197 acc 51.80% top5 93.94% ece 4.54 (best 51.80%) | gap -2.09 | |th|   103.4 | gamma 6.41e-06 gap_rel 0.999 | 192s
+[fw] ep   5/10 | train loss 1.3798 acc 49.91% top5 93.21% | test loss 1.3106 acc 52.30% top5 94.01% ece 4.50 (best 52.30%) | gap -2.39 | |th|   103.1 | gamma 5.13e-06 gap_rel 0.999 | 240s
+[fw] ep   6/10 | train loss 1.3692 acc 50.20% top5 93.35% | test loss 1.3024 acc 52.49% top5 94.16% ece 4.31 (best 52.49%) | gap -2.29 | |th|   103.0 | gamma 4.27e-06 gap_rel 0.999 | 287s
+[fw] ep   7/10 | train loss 1.3620 acc 50.62% top5 93.51% | test loss 1.2956 acc 52.80% top5 94.28% ece 4.41 (best 52.80%) | gap -2.18 | |th|   102.8 | gamma 3.66e-06 gap_rel 0.999 | 335s
+[fw] ep   8/10 | train loss 1.3542 acc 50.95% top5 93.55% | test loss 1.2905 acc 52.94% top5 94.29% ece 4.56 (best 52.94%) | gap -1.99 | |th|   102.7 | gamma 3.21e-06 gap_rel 0.999 | 384s
+[fw] ep   9/10 | train loss 1.3517 acc 51.31% top5 93.40% | test loss 1.2863 acc 53.11% top5 94.27% ece 4.27 (best 53.11%) | gap -1.80 | |th|   102.6 | gamma 2.85e-06 gap_rel 0.999 | 431s
+[fw] ep  10/10 | train loss 1.3477 acc 51.21% top5 93.62% | test loss 1.2818 acc 53.27% top5 94.43% ece 4.35 (best 53.27%) | gap -2.06 | |th|   102.5 | gamma 2.56e-06 gap_rel 0.999 | 479s
+final: test acc 53.27% (top5 94.43, err 46.73, ece 4.35, macroF1 52.68) | best 53.27% @ep10 | train acc 51.21% loss 1.3477 | gap -2.06 | 480s
