@@ -1,107 +1,114 @@
-# Stochastic Frank-Wolfe VI optimizer cho Computer Vision (CIFAR-10/100, backbone có sẵn)
+# Stochastic Frank-Wolfe VI optimizer for Computer Vision (CIFAR-10/100, off-the-shelf backbones)
 
-Cùng bộ optimizer và cùng giao thức thực nghiệm như `../CODE_MARL`, nhưng thay MAPPO/PettingZoo
-bằng bài toán phân loại ảnh có giám sát trên **backbone lấy sẵn từ thư viện, khởi tạo ngẫu nhiên**
-(mục tiêu là so sánh **tốc độ hội tụ của optimizer**, không phải fine-tune trọng số pretrained).
+Evaluation of the **Stochastic Frank-Wolfe** optimizer for variational inequalities (VI) on
+supervised image classification, using **off-the-shelf backbones from libraries, randomly
+initialised** (the goal is to compare the **convergence speed of optimizers**, not to fine-tune
+pretrained weights). Every method — FW, FW-Adam, GDA, PGD, OGDA, EG, Lookahead, Adam, SGDM — runs
+inside the same training loop, on the same data, with the same seeds and the same set of metrics.
 
-> **Chạy thực nghiệm lần đầu?** Đọc [`HUONG_DAN_CHAY.md`](HUONG_DAN_CHAY.md) — hướng dẫn từng bước:
-> cài thư viện, tải dữ liệu, ước lượng thời gian, ba kế hoạch chạy (`quick` / `standard` / `full`)
-> qua `scripts/run_experiments.sh` (hoặc `.ps1`), và cách dựng báo cáo LaTeX.
+> **First time running the experiments?** Read [`HUONG_DAN_CHAY.md`](HUONG_DAN_CHAY.md) — a
+> step-by-step guide (in Vietnamese): installing the libraries, downloading the data, estimating
+> runtime, the three run plans (`quick` / `standard` / `full`) via `scripts/run_experiments.sh`
+> (or `.ps1`), and how to build the LaTeX report.
 
 ```
-pip install -r requirements.txt                          # torch cài riêng theo bản CUDA
-python sanity_check.py                                   # bậc 1: kiểm tra đúng đắn (~3 phút, CPU)
-python data.py                                           # tải CIFAR-10 + CIFAR-100 một lần
-python bench_speed.py                                    # đo giây/epoch trên GPU của bạn
+pip install -r requirements.txt                          # install torch separately for your CUDA build
+python sanity_check.py                                   # tier 1: correctness checks (~3 min, CPU)
+python data.py                                           # download CIFAR-10 + CIFAR-100 once
+python bench_speed.py                                    # measure seconds/epoch on your GPU
 python train.py --optimizer fw --model resnet18 --dataset cifar10 --radius 2
 python train.py --optimizer fw_adam --model wrn28_10 --dataset cifar100
 python train.py --optimizer sgdm --lr 0.1 --model resnet34 --dataset cifar100
 python run_ablation.py all --dataset cifar10 --model resnet18 --seeds 3 --epochs 50
-python run_ablation.py sweep --stages ablation baselines report   # cả 6 ô (dataset x model)
-python make_paper_tables.py                              # bảng LaTeX -> ../paper_cv/tables
+python run_ablation.py sweep --stages ablation baselines report   # all 6 cells (dataset x model)
+python make_paper_tables.py                              # LaTeX tables -> ../paper_cv/tables
 ```
 
-Yêu cầu: Python 3.10+, torch, torchvision, **pytorchcv** (cho WRN-28-10), numpy, tyro, pandas,
+Requirements: Python 3.10+, torch, torchvision, **pytorchcv** (for WRN-28-10), numpy, tyro, pandas,
 matplotlib.
 
-## 1. Backbone: lấy sẵn, không viết lại, không dùng trọng số pretrained
+## 1. Backbones: off-the-shelf, not reimplemented, never pretrained
 
-| model | nguồn | tham số (C10 / C100) |
+| model | source | parameters (C10 / C100) |
 |---|---|---|
 | `resnet18` | `torchvision.models.resnet18(weights=None)` | 11.17M / 11.22M |
 | `resnet34` | `torchvision.models.resnet34(weights=None)` | 21.28M / 21.33M |
 | `wrn28_10` | `pytorchcv` → `wrn28_10_cifar{10,100}`, `pretrained=False` | 36.48M / 36.54M |
 
-* **Vì sao WRN lấy từ `pytorchcv`?** torchvision **không có** WRN-28-10; `wide_resnet50_2` /
-  `wide_resnet101_2` của nó là mạng bottleneck cho ImageNet (69M / 127M tham số), kiến trúc khác hẳn.
-  `pytorchcv` (osmr/imgclsmob) có đúng WRN-28-10 chuẩn của Zagoruyko & Komodakis (2016).
-* **Vì sao ResNet phải đổi stem?** ResNet của torchvision là bản ImageNet: stem 7×7 stride 2 + max-pool,
-  làm ảnh 32×32 co còn 8×8 trước block đầu tiên (mất ~5 điểm accuracy). `--cifar-stem` (mặc định bật)
-  thay bằng 3×3 stride 1, bỏ max-pool — đúng biến thể mà mọi số CIFAR trong tài liệu dùng.
-* **Luôn `pretrained=False`.** Nạp trọng số ImageNet/CIFAR sẽ khiến mọi phương pháp xuất phát gần
-  nghiệm và ta đo fine-tuning chứ không đo hội tụ.
+* **Why is WRN taken from `pytorchcv`?** torchvision **does not have** WRN-28-10; its
+  `wide_resnet50_2` / `wide_resnet101_2` are bottleneck networks for ImageNet (69M / 127M
+  parameters), a completely different architecture. `pytorchcv` (osmr/imgclsmob) provides exactly
+  the standard WRN-28-10 of Zagoruyko & Komodakis (2016).
+* **Why must the ResNet stem be changed?** torchvision's ResNet is the ImageNet variant: a 7×7
+  stride-2 stem plus max-pool, which shrinks a 32×32 image down to 8×8 before the first block
+  (costing ~5 accuracy points). `--cifar-stem` (on by default) replaces it with 3×3 stride 1 and
+  drops the max-pool — exactly the variant behind every CIFAR number in the literature.
+* **Always `pretrained=False`.** Loading ImageNet/CIFAR weights would start every method close to a
+  solution, so we would be measuring fine-tuning rather than convergence.
 
-## 2. Cấu trúc
+## 2. Layout
 
-| File | Nội dung |
+| File | Contents |
 |---|---|
-| `optimizers/frank_wolfe.py` | **`StochasticFrankWolfe`** — mỗi `param_group` là một khối của C |
+| `optimizers/frank_wolfe.py` | **`StochasticFrankWolfe`** — each `param_group` is one block of C |
 | `optimizers/lmo.py` | LMO: `L2Ball` (s = −R F̂/‖F̂‖), `LinfBall`, `Simplex` |
-| `optimizers/schedules.py` | γ_k: `harmonic`, `power` (trong định lý); `constant`, `mlogm` (ablation) |
-| `optimizers/gda.py` | Baseline 0: **GDA** (= SGD thuần) và **PGD** (chiếu lên đúng tập C của FW) |
-| `optimizers/ogda.py`, `extragradient.py`, `lookahead.py` | OGDA / EG / Lookahead (+ bản Adam) |
-| `optimizers/__init__.py` | `make_optimizer(...)` — một factory cho mọi phương pháp, thêm `sgdm` |
-| `models/__init__.py` | 3 backbone có sẵn + `make_groups` (các khối của C) |
-| `data.py` | CIFAR-10/100, augmentation chuẩn, tách val cố định (seed 0) để dò lr |
-| `metrics.py` | loss, acc, err, top-5, ECE, macro-F1, confidence — cho **cả train lẫn test** |
-| `train.py` | Vòng huấn luyện một file, `--optimizer` chọn optimizer |
-| `sanity_check.py` | Bậc 1: LMO, schedule, bất biến θ_k ∈ C, bài toán lồi có định lý, plumbing |
-| `run_ablation.py` | Giao thức: dò lr → ablation γ×R → baseline × seed → bảng + hình |
-| `make_paper_tables.py` | Sinh bảng LaTeX + copy hình cho `../paper_cv` thẳng từ `summary.json` |
-| `bench_speed.py` | Đo giây/bước và phút/epoch cho từng (model × optimizer × amp × channels_last) |
-| `scripts/run_experiments.{sh,ps1}` | Chạy trọn bộ theo kế hoạch `quick` / `standard` / `full`, resume được |
-| `HUONG_DAN_CHAY.md` | Hướng dẫn chạy chi tiết (cài đặt → dữ liệu → thực nghiệm → báo cáo) |
+| `optimizers/schedules.py` | γ_k: `harmonic`, `power` (inside the theorem); `constant`, `mlogm` (ablation) |
+| `optimizers/gda.py` | Baseline 0: **GDA** (= plain SGD) and **PGD** (projection onto FW's exact set C) |
+| `optimizers/ogda.py`, `extragradient.py`, `lookahead.py` | OGDA / EG / Lookahead (+ Adam variants) |
+| `optimizers/__init__.py` | `make_optimizer(...)` — one factory for every method, plus `sgdm` |
+| `models/__init__.py` | the 3 off-the-shelf backbones + `make_groups` (the blocks of C) |
+| `data.py` | CIFAR-10/100, standard augmentation, fixed val split (seed 0) for lr tuning |
+| `metrics.py` | loss, acc, err, top-5, ECE, macro-F1, confidence — for **both train and test** |
+| `train.py` | Single-file training loop; `--optimizer` selects the optimizer |
+| `sanity_check.py` | Tier 1: LMO, schedules, the θ_k ∈ C invariant, a convex problem covered by the theorem, plumbing |
+| `run_ablation.py` | Protocol: lr tuning → γ×R ablation → baselines × seeds → tables + figures |
+| `make_paper_tables.py` | Generates LaTeX tables + copies figures for `../paper_cv` straight from `summary.json` |
+| `bench_speed.py` | Measures seconds/step and minutes/epoch per (model × optimizer × amp × channels_last) |
+| `scripts/run_experiments.{sh,ps1}` | Runs the whole suite under the `quick` / `standard` / `full` plan, resumable |
+| `HUONG_DAN_CHAY.md` | Detailed run guide (setup → data → experiments → report) |
 | `results/` | `tables_<dataset>_<model>.txt`, `figures/`, `runs/<group>/<run>/{log.csv,summary.json}` |
 
-## 3. Ánh xạ paper → code
+## 3. Paper → code mapping
 
 | Paper / note | Code |
 |---|---|
-| x ∈ C ⊂ ℝⁿ | θ = toàn bộ trọng số; C = ∏_g C_g, C_g = {‖θ_g‖₂ ≤ R_g} — mỗi khối một `param_group` |
-| khối của C | `--block all` (một quả cầu duy nhất) / `module` (mỗi lớp conv/bn/linear) / `param` (mỗi tensor) |
-| bán kính R | `--radius-mode rel`: R_g = `radius`·‖θ_g⁰‖ — thang đo duy nhất dùng chung được cho 11M và 36M tham số |
-| F(θ) | gradient cross-entropy của **một minibatch**; sau `loss.backward()` thì `p.grad` **chính là** F̂_k |
+| x ∈ C ⊂ ℝⁿ | θ = all weights; C = ∏_g C_g, C_g = {‖θ_g‖₂ ≤ R_g} — one `param_group` per block |
+| blocks of C | `--block all` (a single ball) / `module` (each conv/bn/linear layer) / `param` (each tensor) |
+| radius R | `--radius-mode rel`: R_g = `radius`·‖θ_g⁰‖ — one scale usable for both 11M and 36M parameters |
+| F(θ) | cross-entropy gradient of **a single minibatch**; after `loss.backward()`, `p.grad` **is** F̂_k |
 | s_k ∈ β(F(x_k)) | `lmo(grads, params)` — L2: s = −R F̂/‖F̂‖ |
-| x_{k+1} = x_k + γ_{k+1}(s_k − x_k) | `p.add_(s - p, alpha=gamma)`; không bao giờ cần phép chiếu |
-| x₀ ∈ C | `project_init=True`: chiếu θ₀ lên C **một lần** lúc khởi tạo |
-| Frank-Wolfe gap V(x) | log `fw_gap` = ⟨F̂,θ⟩ + R‖F̂‖ và `gap_rel` = V̂/(R‖F̂‖) ∈ [0,2] |
-| một vòng lặp k | một minibatch = một bước optimizer (391 bước FW mỗi epoch với batch 128) |
+| x_{k+1} = x_k + γ_{k+1}(s_k − x_k) | `p.add_(s - p, alpha=gamma)`; no projection is ever needed |
+| x₀ ∈ C | `project_init=True`: project θ₀ onto C **once** at initialisation |
+| Frank-Wolfe gap V(x) | logs `fw_gap` = ⟨F̂,θ⟩ + R‖F̂‖ and `gap_rel` = V̂/(R‖F̂‖) ∈ [0,2] |
+| one iteration k | one minibatch = one optimizer step (391 FW steps per epoch at batch 128) |
 
-BatchNorm running mean/var là **buffer**, không phải tham số, nên ràng buộc không đụng tới chúng.
+BatchNorm running mean/var are **buffers**, not parameters, so the constraint never touches them.
 
-## 4. Metrics — ghi mỗi epoch, cho **cả hai** split
+## 4. Metrics — logged every epoch, for **both** splits
 
-`metrics.py` tính đầy đủ cho train (cộng dồn trực tiếp từ minibatch, không tốn thêm forward) và
-test/val (một lượt sạch với `model.eval()`):
+`metrics.py` computes the full set for train (accumulated directly from minibatches, no extra
+forward pass) and for test/val (one clean pass under `model.eval()`):
 
-`loss`, `acc` (top-1), `err`, `top5`, `ece` (15 bin, Guo et al. 2017), `macro_f1`, `conf`
-— cộng với `gen_gap` = train_acc − test_acc, `theta_norm`, `grad_norm`, `img_per_s`, `epoch_s`,
-và các chẩn đoán FW: `gamma`, `fw_gap`, `gap_rel`, `cos_ts`, `cos_prev`, `cos_adam`, `in_C`.
+`loss`, `acc` (top-1), `err`, `top5`, `ece` (15 bins, Guo et al. 2017), `macro_f1`, `conf`
+— plus `gen_gap` = train_acc − test_acc, `theta_norm`, `grad_norm`, `img_per_s`, `epoch_s`, and the
+FW diagnostics: `gamma`, `fw_gap`, `gap_rel`, `cos_ts`, `cos_prev`, `cos_adam`, `in_C`.
 
-`summary.json` bổ sung: accuracy cuối / tốt nhất / trung bình 10% cuối, `ep_to_<target>` (epoch đầu
-tiên đạt mốc accuracy — trục **tốc độ hội tụ**), accuracy từng lớp, và bán kính từng khối.
+`summary.json` adds: final / best / last-10% mean accuracy, `ep_to_<target>` (the first epoch that
+reaches an accuracy milestone — the **convergence-speed** axis), per-class accuracy, and per-block
+radii.
 
-## 5. Những chỗ cố ý rời khỏi paper — phải ghi vào báo cáo
+## 5. Deliberate departures from the paper — must be stated in the report
 
-1. **Toán tử ngẫu nhiên**: paper dùng F(x_k) chính xác; ở đây là F̂_k từ một minibatch.
-2. **F không đơn điệu**: phân loại ảnh là bài toán **cực tiểu hoá không lồi**, F = ∇L là trường
-   gradient nhưng không đơn điệu — giống hệt tình trạng ở `CODE_MARL`.
-3. **BatchNorm**: buffer không nằm trong C, nên iterate "trong C" chỉ nói về tham số.
-4. **AMP**: `GradScaler` được `unscale_` trước `step()`, nên `p.grad` mà LMO nhìn thấy là F̂ thật.
-5. **`sgdm` không thuộc thang VI**: nó là công thức thực dụng của CIFAR (momentum 0.9, weight decay
-   5e-4, cosine). Vẫn phải có, vì mọi số ResNet/WRN đã công bố đều từ nó; so với SGD thuần sẽ tâng bốc FW.
-6. **Đính chính `mlogm`**: docstring ở `CODE_MARL/optimizers/schedules.py` nói γ_k ~ 1/(k log k) là
-   **khả tổng** — sai. Chuỗi ∑1/(m log m) **phân kỳ** (Cauchy condensation), nên `mlogm` vẫn thoả cả ba
-   điều kiện của (FW). Điều đáng nói là **tốc độ**: tổng riêng chỉ tăng như log log k (đo được: +1.32
-   mỗi decade ở 1e4→1e5, +1.05 ở 1e5→1e6, so với đúng +2.30 mỗi decade của `harmonic`). Xem
-   `optimizers/schedules.py` và test 2 của `sanity_check.py`.
+1. **Stochastic operator**: the paper uses the exact F(x_k); here it is F̂_k from a single minibatch.
+2. **F is not monotone**: image classification is a **non-convex minimisation** problem; F = ∇L is a
+   gradient field but not a monotone operator.
+3. **BatchNorm**: buffers lie outside C, so "the iterate stays in C" refers to the parameters only.
+4. **AMP**: `GradScaler` is `unscale_`d before `step()`, so the `p.grad` the LMO sees is the true F̂.
+5. **`sgdm` is not on the VI scale**: it is the pragmatic CIFAR recipe (momentum 0.9, weight decay
+   5e-4, cosine). It still has to be included, because every published ResNet/WRN number comes from
+   it; comparing against plain SGD alone would flatter FW.
+6. **A correction about `mlogm`**: it is commonly assumed that γ_k ~ 1/(k log k) is **summable** —
+   that is wrong. The series ∑1/(m log m) **diverges** (Cauchy condensation), so `mlogm` does satisfy
+   all three (FW) conditions. What matters is the **rate**: the partial sums only grow like log log k
+   (measured: +1.32 per decade over 1e4→1e5, +1.05 over 1e5→1e6, against exactly +2.30 per decade for
+   `harmonic`). See `optimizers/schedules.py` and test 2 in `sanity_check.py`.
