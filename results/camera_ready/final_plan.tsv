@@ -1,0 +1,11 @@
+dataset	family	scale	optimizer	schedule	eta1	k0	lr
+cifar10	ell	2	fw	harmonic	2	2	-
+cifar10	harmonic	1	fw	harmonic	1	0	-
+cifar10	mlogm	1	fw	mlogm	1	0	-
+cifar10	pgd	0.3	pgd	-	-	-	0.3
+cifar10	power	0.01	fw	power	0.01	0	-
+cifar100	ell	2	fw	harmonic	2	2	-
+cifar100	harmonic	1	fw	harmonic	1	0	-
+cifar100	mlogm	0.3	fw	mlogm	0.3	0	-
+cifar100	pgd	0.3	pgd	-	-	-	0.3
+cifar100	power	0.01	fw	power	0.01	0	-

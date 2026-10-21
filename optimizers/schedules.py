@@ -50,7 +50,7 @@ class Harmonic(Schedule):
     satisfies_theorem = True
 
     def __init__(self, eta1: float = 1.0, k0: float = 0.0):
-        _check_eta(eta1)
+        _check_eta(eta1, upper=ETA1_MAX)
         self.eta1, self.k0 = float(eta1), float(k0)
 
     def __call__(self, k: int) -> float:
@@ -65,7 +65,7 @@ class Power(Schedule):
     satisfies_theorem = True
 
     def __init__(self, eta1: float = 1.0, alpha: float = 0.5001, k0: float = 0.0):
-        _check_eta(eta1)
+        _check_eta(eta1, upper=ETA1_MAX)
         if not 0.0 < alpha <= 1.0:
             raise ValueError("alpha must lie in (0, 1] to keep sum gamma_k = inf")
         self.eta1, self.alpha, self.k0 = float(eta1), float(alpha), float(k0)
@@ -119,7 +119,7 @@ class MLogM(Schedule):
     satisfies_theorem = True        # divergent sum, but log log slow
 
     def __init__(self, eta1: float = 1.0):
-        _check_eta(eta1)
+        _check_eta(eta1, upper=ETA1_MAX)
         self.eta1 = float(eta1)
 
     def __call__(self, k: int) -> float:
@@ -130,9 +130,14 @@ class MLogM(Schedule):
         return {"eta1": self.eta1}
 
 
-def _check_eta(eta1: float) -> None:
-    if not 0.0 < eta1 <= 1.0:
-        raise ValueError("eta1 must lie in (0, 1] so that gamma_k <= 1")
+# camera-ready: eta1 > 1 is allowed for the diminishing schedules; gamma_k is
+# still clipped to <= 1 inside __call__.  `constant` keeps the old bound.
+ETA1_MAX = 1000.0
+
+
+def _check_eta(eta1: float, upper: float = 1.0) -> None:
+    if not 0.0 < eta1 <= upper:
+        raise ValueError("eta1 must lie in (0, %g]" % upper)
 
 
 _TABLE: Dict[str, Callable[..., Schedule]] = {

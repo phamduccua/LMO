@@ -1,0 +1,25 @@
+Files already downloaded and verified
+cifar10__resnet18__fw__eta11_radius5_schedulemlogm__e20__s3
+  resnet18 (torchvision.models.resnet18, untrained) 11.17M params | cifar10 | 10 classes | opt=fw | 41 blocks of C | cuda | amp=bfloat16
+  C: l2 ball, R in [9.22, 160] (rel, radius=5), ||theta_0|| 111.73 -> 111.73 after projection
+[fw] ep   1/20 | train loss 2.7281 acc 18.03% top5 73.31% | val loss 2.0798 acc 20.48% top5 73.58% ece 3.35 (best 20.48%) | gap -2.45 | |th|    31.9 | gamma 3.25e-03 gap_rel 1.001 | 41s
+[fw] ep   2/20 | train loss 1.7874 acc 29.65% top5 86.20% | val loss 2.0030 acc 24.32% top5 78.28% ece 6.26 (best 24.32%) | gap  5.33 | |th|    27.0 | gamma 1.42e-03 gap_rel 0.999 | 82s
+[fw] ep   3/20 | train loss 1.6309 acc 37.30% top5 89.70% | val loss 1.6554 acc 36.90% top5 89.34% ece 2.39 (best 36.90%) | gap  0.40 | |th|    25.8 | gamma 8.81e-04 gap_rel 0.999 | 122s
+[fw] ep   4/20 | train loss 1.4952 acc 43.82% top5 92.09% | val loss 1.7223 acc 36.26% top5 86.54% ece 3.13 (best 36.90%) | gap  7.56 | |th|    25.7 | gamma 6.29e-04 gap_rel 0.999 | 163s
+[fw] ep   5/20 | train loss 1.3977 acc 48.70% top5 93.08% | val loss 1.8998 acc 31.86% top5 85.10% ece 16.96 (best 36.90%) | gap 16.84 | |th|    25.8 | gamma 4.83e-04 gap_rel 0.999 | 204s
+[fw] ep   6/20 | train loss 1.3035 acc 52.92% top5 94.01% | val loss 1.7737 acc 36.08% top5 86.58% ece 11.83 (best 36.90%) | gap 16.84 | |th|    26.2 | gamma 3.91e-04 gap_rel 0.999 | 244s
+[fw] ep   7/20 | train loss 1.2229 acc 56.24% top5 94.54% | val loss 1.4000 acc 49.86% top5 92.16% ece 5.55 (best 49.86%) | gap  6.38 | |th|    26.3 | gamma 3.27e-04 gap_rel 0.999 | 284s
+[fw] ep   8/20 | train loss 1.1601 acc 58.37% top5 95.20% | val loss 1.5923 acc 44.96% top5 90.04% ece 12.98 (best 49.86%) | gap 13.41 | |th|    26.6 | gamma 2.80e-04 gap_rel 0.998 | 325s
+[fw] ep   9/20 | train loss 1.0968 acc 60.93% top5 95.79% | val loss 1.3415 acc 49.46% top5 93.52% ece 6.67 (best 49.86%) | gap 11.47 | |th|    27.0 | gamma 2.45e-04 gap_rel 0.998 | 365s
+[fw] ep  10/20 | train loss 1.0533 acc 62.59% top5 96.02% | val loss 1.0836 acc 60.98% top5 96.22% ece 3.78 (best 60.98%) | gap  1.61 | |th|    27.2 | gamma 2.17e-04 gap_rel 0.998 | 406s
+[fw] ep  11/20 | train loss 1.0077 acc 64.31% top5 96.35% | val loss 1.0298 acc 63.80% top5 96.48% ece 5.23 (best 63.80%) | gap  0.51 | |th|    27.3 | gamma 1.94e-04 gap_rel 0.998 | 447s
+[fw] ep  12/20 | train loss 0.9701 acc 65.90% top5 96.49% | val loss 1.0794 acc 61.84% top5 95.20% ece 1.95 (best 63.80%) | gap  4.06 | |th|    27.5 | gamma 1.76e-04 gap_rel 0.998 | 489s
+[fw] ep  13/20 | train loss 0.9307 acc 67.41% top5 96.84% | val loss 0.9782 acc 66.46% top5 96.40% ece 2.73 (best 66.46%) | gap  0.95 | |th|    27.6 | gamma 1.60e-04 gap_rel 0.998 | 529s
+[fw] ep  14/20 | train loss 0.8972 acc 68.68% top5 97.08% | val loss 1.2920 acc 56.68% top5 92.20% ece 4.15 (best 66.46%) | gap 12.00 | |th|    27.8 | gamma 1.47e-04 gap_rel 0.998 | 570s
+[fw] ep  15/20 | train loss 0.8628 acc 69.93% top5 97.40% | val loss 1.1071 acc 62.12% top5 94.20% ece 3.05 (best 66.46%) | gap  7.81 | |th|    27.9 | gamma 1.36e-04 gap_rel 0.998 | 611s
+[fw] ep  16/20 | train loss 0.8336 acc 70.97% top5 97.49% | val loss 0.8154 acc 72.12% top5 97.68% ece 2.89 (best 72.12%) | gap -1.15 | |th|    28.0 | gamma 1.27e-04 gap_rel 0.998 | 652s
+[fw] ep  17/20 | train loss 0.8038 acc 71.93% top5 97.61% | val loss 0.8779 acc 69.08% top5 97.06% ece 2.90 (best 72.12%) | gap  2.85 | |th|    28.1 | gamma 1.18e-04 gap_rel 0.998 | 692s
+[fw] ep  18/20 | train loss 0.7843 acc 72.82% top5 97.78% | val loss 0.8960 acc 68.94% top5 96.92% ece 3.05 (best 72.12%) | gap  3.88 | |th|    28.2 | gamma 1.11e-04 gap_rel 0.998 | 732s
+[fw] ep  19/20 | train loss 0.7627 acc 73.72% top5 97.88% | val loss 0.9127 acc 68.16% top5 96.60% ece 1.12 (best 72.12%) | gap  5.56 | |th|    28.2 | gamma 1.04e-04 gap_rel 0.998 | 773s
+[fw] ep  20/20 | train loss 0.7474 acc 74.40% top5 98.00% | val loss 0.7933 acc 72.66% top5 97.70% ece 1.94 (best 72.66%) | gap  1.74 | |th|    28.3 | gamma 9.81e-05 gap_rel 0.998 | 813s
+final: val acc 72.66% (top5 97.70, err 27.34, ece 1.94, macroF1 72.77) | best 72.66% @ep20 | train acc 74.40% loss 0.7474 | gap 1.74 | 814s

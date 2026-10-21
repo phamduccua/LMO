@@ -1,0 +1,9 @@
+dataset,schedule,block,n,seeds,acc_final_list,median
+cifar10,harmonic,module,2,2 3,82.32 86.30,84.31
+cifar10,harmonic,module_nobn,2,2 3,83.69 88.10,85.89
+cifar10,power,module,2,2 3,10.00 10.00,10.00
+cifar10,power,module_nobn,2,2 3,34.65 22.57,28.61
+cifar100,harmonic,module,2,2 3,46.36 44.95,45.66
+cifar100,harmonic,module_nobn,2,2 3,60.40 59.25,59.82
+cifar100,power,module,2,2 3,1.00 1.00,1.00
+cifar100,power,module_nobn,2,2 3,8.14 9.29,8.72

@@ -1,0 +1,25 @@
+Files already downloaded and verified
+Files already downloaded and verified
+cifar10__resnet18__pgd__final_lr0.3_radius5__e20__s12
+  resnet18 (torchvision.models.resnet18, untrained) 11.17M params | cifar10 | 10 classes | opt=pgd | 41 blocks of C | cuda | amp=bfloat16
+[pgd] ep   1/20 | train loss 1.9230 acc 32.58% top5 83.75% | test loss 1.4844 acc 45.16% top5 91.72% ece 2.26 (best 45.16%) | gap -12.58 | |th|   112.2 | lr 0.2982 | 27s
+[pgd] ep   2/20 | train loss 1.3422 acc 50.79% top5 93.74% | test loss 1.2127 acc 55.73% top5 96.00% ece 5.89 (best 55.73%) | gap -4.94 | |th|   112.6 | lr 0.2927 | 54s
+[pgd] ep   3/20 | train loss 1.0606 acc 62.10% top5 96.27% | test loss 1.0451 acc 62.86% top5 96.05% ece 2.71 (best 62.86%) | gap -0.76 | |th|   113.0 | lr 0.2837 | 81s
+[pgd] ep   4/20 | train loss 0.8701 acc 69.13% top5 97.57% | test loss 0.7898 acc 73.07% top5 98.12% ece 3.02 (best 73.07%) | gap -3.94 | |th|   113.4 | lr 0.2714 | 108s
+[pgd] ep   5/20 | train loss 0.7275 acc 74.47% top5 98.39% | test loss 0.7416 acc 73.74% top5 98.46% ece 4.35 (best 73.74%) | gap  0.73 | |th|   113.8 | lr 0.2561 | 135s
+[pgd] ep   6/20 | train loss 0.6275 acc 77.99% top5 98.79% | test loss 0.6776 acc 76.77% top5 98.67% ece 3.31 (best 76.77%) | gap  1.22 | |th|   114.1 | lr 0.2382 | 161s
+[pgd] ep   7/20 | train loss 0.5507 acc 80.91% top5 99.09% | test loss 0.8686 acc 72.59% top5 98.55% ece 9.90 (best 76.77%) | gap  8.32 | |th|   114.4 | lr 0.2182 | 188s
+[pgd] ep   8/20 | train loss 0.4878 acc 82.83% top5 99.22% | test loss 0.6216 acc 79.45% top5 99.08% ece 6.06 (best 79.45%) | gap  3.38 | |th|   114.6 | lr 0.1964 | 215s
+[pgd] ep   9/20 | train loss 0.4342 acc 84.88% top5 99.41% | test loss 0.4584 acc 84.31% top5 99.29% ece 2.01 (best 84.31%) | gap  0.57 | |th|   114.8 | lr 0.1735 | 241s
+[pgd] ep  10/20 | train loss 0.3927 acc 86.42% top5 99.49% | test loss 0.4419 acc 85.34% top5 99.50% ece 3.08 (best 85.34%) | gap  1.08 | |th|   115.0 | lr 0.1501 | 268s
+[pgd] ep  11/20 | train loss 0.3541 acc 87.59% top5 99.63% | test loss 0.4091 acc 85.94% top5 99.47% ece 3.08 (best 85.94%) | gap  1.65 | |th|   115.1 | lr 0.1266 | 295s
+[pgd] ep  12/20 | train loss 0.3188 acc 89.04% top5 99.68% | test loss 0.3822 acc 87.15% top5 99.51% ece 2.47 (best 87.15%) | gap  1.89 | |th|   115.2 | lr 0.1037 | 321s
+[pgd] ep  13/20 | train loss 0.2839 acc 90.09% top5 99.74% | test loss 0.3956 acc 86.90% top5 99.49% ece 3.37 (best 87.15%) | gap  3.19 | |th|   115.3 | lr 0.08196 | 348s
+[pgd] ep  14/20 | train loss 0.2542 acc 91.15% top5 99.81% | test loss 0.3716 acc 87.52% top5 99.57% ece 3.61 (best 87.52%) | gap  3.63 | |th|   115.3 | lr 0.06188 | 374s
+[pgd] ep  15/20 | train loss 0.2243 acc 92.27% top5 99.86% | test loss 0.3473 acc 88.80% top5 99.58% ece 3.14 (best 88.80%) | gap  3.47 | |th|   115.3 | lr 0.04398 | 395s
+[pgd] ep  16/20 | train loss 0.2080 acc 92.70% top5 99.89% | test loss 0.3295 acc 89.51% top5 99.65% ece 2.78 (best 89.51%) | gap  3.19 | |th|   115.3 | lr 0.02868 | 421s
+[pgd] ep  17/20 | train loss 0.1879 acc 93.46% top5 99.91% | test loss 0.3159 acc 89.71% top5 99.66% ece 3.07 (best 89.71%) | gap  3.75 | |th|   115.3 | lr 0.01638 | 448s
+[pgd] ep  18/20 | train loss 0.1741 acc 93.96% top5 99.92% | test loss 0.3186 acc 89.73% top5 99.64% ece 3.25 (best 89.73%) | gap  4.23 | |th|   115.4 | lr 0.00736 | 475s
+[pgd] ep  19/20 | train loss 0.1686 acc 94.07% top5 99.93% | test loss 0.3163 acc 89.60% top5 99.64% ece 3.40 (best 89.73%) | gap  4.47 | |th|   115.4 | lr 0.001856 | 502s
+[pgd] ep  20/20 | train loss 0.1637 acc 94.29% top5 99.93% | test loss 0.3163 acc 89.62% top5 99.65% ece 3.37 (best 89.73%) | gap  4.67 | |th|   115.4 | lr 1.217e-08 | 528s
+final: test acc 89.62% (top5 99.65, err 10.38, ece 3.37, macroF1 89.59) | best 89.73% @ep18 | train acc 94.29% loss 0.1637 | gap 4.67 | 529s
